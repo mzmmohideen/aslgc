@@ -1,0 +1,21 @@
+{%extends "layout.html" %}
+{%block content %}
+<html>
+<head><title>Stock Details</title>
+<style type="text/css">
+	h1{text-align: center;}b{text-align: center;font-size: 18px;}
+</style></head>
+<body bgcolor="DarkSeaGreen"><h1>Books Stock Details:</h1><br/>
+	<form>Search By Book Name :<input type="text" name="bname"> &nbsp;Search By Book ID :<input type="text" name="bid"> &nbsp;Search By Author :<input type="text" name="auhtor"><br/><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	<button type="button" onclick="bookSearch()"><b>Search</b></button>
+
+<p id="stock"></p>
+
+<script>
+function bookSearch() {
+    document.getElementById("stock");
+}
+</script>
+
+</body></html>
+{%endblock%}	

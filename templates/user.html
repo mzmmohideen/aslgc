@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<html>
+<head><title>User Details</title>
+<style type="text/css">
+h1{text-align: center;}
+</style>
+</head>
+<body bgcolor="DarkSeaGreen"><br/><br/><br/><br/><br/>
+<h1>User Details:</h1><div align="center">
+<form><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 ENTER USER ID &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" name="uid"/><button type="button" onclick="userSearch">Search</button><br/>
+	 Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" name="uname"/><br/>
+	 Contact Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" name="mobile"/><br/>
+	 Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" name="uaddr"/><br/>
+	 </form></div></body></html>
+	 {% endblock %}

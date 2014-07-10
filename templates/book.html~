@@ -1,0 +1,26 @@
+{%extends "layout.html" %}
+{%block content %}
+<html>
+<head><title>Lending Book Register</title>
+<style type="text/css">
+</style>
+</head>
+<body >
+<form style="float:left;"><br/><br/><br/>
+	 ENTER USER ID :<input type="text" value="" name="uid"/><br/>
+	 User Name :<input type="text" value="" name="uname"/><br/>
+	 Contact Number :<input type="text" value="" name="uno"/><br/>
+	 Address :<input type="text" value="" name="uaddr"/><br/>
+	 </form>
+
+<form style="float:right;"> <br/><br/><br/>
+Enter Book ID : <input type="text" value="" name="bid"/><br/>
+       Book Name     : <input type="text" value="" name="bname"/><br/>
+       Author        : <input type="text" value="" name="author"/><br/>
+       Quantity      : <input type="text" value="" name="qt"/><br/>
+       	 <br/><br/><br/><br/>
+<input type="submit" name="button" value="submit"><input type="button" name="button" value="clear"></form>   
+	 	
+</body>
+</html>
+{%endblock%}
