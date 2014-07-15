@@ -1,21 +1,59 @@
-{% extends "layout.html" %}
-{% block content %}
+{% csrf_token%}
 <html>
 <head><title>Login</title>
 <style type="text/css">
+div.box
+{
+    -moz-box-sizing: box; /* Firefox */
+    box-sizing: box;
+    width: 50%;
+    
+}
+
 b{text-align: center;font-size: 18px;}
 </style>
 </head>
-<body bgcolor="darkseagreen">
+<body bgcolor="darkseagreen"><br/><br/><br/>
+{{ state }}
 <div align="center"><h1>Ahlus Sunnah Library and Guidance Centre</h1>
-<h2>Alandur,Chennai-600016.</h1>
-<form><br/><br/><br/><br/>
+<h2>Alandur,Chennai-600016.</h2>
+<form accept="" location="/home/" method="POST">{% csrf_token %}<br/><br/>
+{% if next %}
+		<input type="hidden" name="next" value="{{ next }}" />
+		{% endif %}
 <h2>User Login</h2>
-	Username &nbsp;:<input type="text" value="" name="uname"/><br/>
-	Password &nbsp;:<input type="password" value="" name="pwd"/><br/>
-	<br><button type="button" onclick="Login()"><b>Login</b></button>
-</form>
+	<div class="box">Username &nbsp;:<input type="text" value="{{ username}}" name="username"/></div><br/>
+	<div class="box">Password &nbsp;:<input type="password" value="" name="password"/></div><br/>
+	<br><button type="button" onclick="Login(this.form)">&nbsp;<b>Login</b></button> 
+	<!-- <input type="submit" value="Login"> -->
+	<input type="reset" value="Reset">
 </div>
+</form>
+
+ <script>
+	function Login(form)
+	{
+
+		$.ajax({
+			type:"POST",
+			url:"/login/",
+			data:{
+				username:form.username.value,
+				password:form.password.value,
+				csrfmiddlewaretoken:'{{ csrf_token }}'
+			}
+			,success:function(response){
+			
+		}
+		});
+		// if (form.username.value == "aslgc" && form.password.value == "aslgc123") {
+
+		// 	// window.location.href = "/home";
+		// }
+		// else{"Username and Password Doesn't Match!"}
+	}
+</script> 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </body>
 </html>
-{% endblock %}
+

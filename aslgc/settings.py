@@ -25,6 +25,7 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
+TEMPLATE_DIRS = ('/home/ithoughtz/repocitory/aslgc/templates')
 
 
 # Application definition
@@ -59,7 +60,7 @@ WSGI_APPLICATION = 'aslgc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'aslgc',
+        'NAME': 'asglc',
          'USER' : '',
          'PASSWORD' : '',
 
