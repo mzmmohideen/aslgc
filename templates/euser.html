@@ -6,16 +6,19 @@
 h1{text-align: center;}b{text-align: center;font-size: 18px;}
 </style>
 </head>
-<body bgcolor="DarkSeaGreen"><br/><br/><br/><br/><br/>
+<body bgcolor="DarkSeaGreen">
+{% csrf_token %}
+<br/><br/><br/><br/><br/>
 <h1>User Enroll:</h1><div align="center">
 <form><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;
-     NAME 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" name="uname"/>
+     NAME 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id='name' name="uname"/>
      &nbsp;&nbsp;&nbsp;<div align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-     GENDER &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;<input type="radio" value="Male" name="gender" />Male<input type="radio" value="Female" name="gender" />Female <br/></div>
-	 ENTER User ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" name="uid"/><br/>
-	 Enter Contact Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" name="mobile"/><br/>
-	 Enter Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" name="uaddr"/><br/><br/>
-	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" onclick="userRegister"><b>Register</b></button><br/>
+     GENDER &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;<input type="radio" id = "gender" value="Male" name="gender" />Male<input type="radio" id="gender" value="Female" name="gender" />Female <br/></div>
+	 ENTER User ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id='uid' name="uid"/><br/>
+	 Enter Contact Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id='mobile' name="mobile"/><br/>
+	 Enter Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id='uaddr' name="uaddr"/><br/><br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 <button type="button" onclick="userRegister()"><b>Register</b></button><br/>
 	 </form></div>
 
 
@@ -33,28 +36,82 @@ h1{text-align: center;}b{text-align: center;font-size: 18px;}
 	console.log(response)
 	if(data==saved)alert{"UserRegistration is Successfull"}-->
 <!-- <script src="{{ STATIC_URL }}js/min.js"></script> -->
-<script type="text/javascript" >
+<!-- <script type="text/javascript" >
 	function userRegister() {
-var name = document.getElementById("uname").value;
+	var name = document.getElementById("uname").value;
     var all={
-name : name,
-};
+	name : name,
+	};
 
-$.ajax({
-type: "POST",
-url: /events/,
-data: {
-all: all,
-csrfmiddlewaretoken: '{{csrf_token}}',
-},
+	$.ajax({
+	type: "POST",
+	url: /events/,
+	data: {
+		all: all,
+		csrfmiddlewaretoken: '{{csrf_token}}',
+	},
 
-success : function(response){
-if (response=='saved'){alert('The Details have been saved successfully')}
-console.log(response);
-},
-});
-}
+	success : function(response){
+	if (response=='saved'){alert('The Details have been saved successfully')}
+	console.log(response);
+	},
+	});
+	}
 </script>
+-->
+<script src="{{ STATIC_URL }}js/min.js"></script>
+<script type="text/javascript">
+  function userRegister() {
+	
+    // console.log(rationid.value)
+
+    var name = document.getElementById("name").value;
+    // console.log(name.value);
+    var gender = document.getElementById("gender").value;
+
+    // if (gender[0].checked) {
+    //     value = gender[0].value;
+    //     var gender = value;
+
+    // } else {
+    //     var gender = gender[1].value;
+    // }
+    var uid = document.getElementById("uid").value;
+    var mobile = document.getElementById("mobile").value;
+    // if (len(mobile)==10) {
+    // 	var mobile = value;
+    // } else {
+    // 	alert('Please Enter the valid Mobile Number')
+    // }
+    
+
+    var uaddr = document.getElementById("uaddr").value;
+    var all = {
+        name: name,
+        gender: gender,
+        uid: uid,
+        mobile: mobile,
+        uaddr: uaddr,
+
+    };
+    console.log(all)
+
+    $.ajax({
+        type: "POST",
+        url: '/euser/',
+        data: {
+            all: all,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+        },
+        success: function (response) {
+        	if (response=='saved'){alert('Registration Successfull !!!')}
+
+            console.log(response);
+            },
+        });    
+
+}
+    
 
 </script>
 </body></html>

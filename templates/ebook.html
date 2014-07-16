@@ -8,10 +8,11 @@ b{text-align: center;font-size: 18px;}
 </style>
 </head>
 <body bgcolor="DarkSeaGreen">
+{% csrf_token %}
 <br/><br/><h1>Add Book</h1>
 <h2>
 <form ><br/><div align="center">
-       Enter Book Title &nbsp;&nbsp;&nbsp;: <input type="text" value="" name="bname"/><br/>
+       Enter Book Title &nbsp;&nbsp;&nbsp;: <input type="text" value="" idname="bname"/><br/>
        Author Name  : <input type="text" value="" name="author"/><br/>
       Publisher : <input type="text" value="" name="pname"><br/>
       Enter Book ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input type="text" value="" name="bid"/><br/>

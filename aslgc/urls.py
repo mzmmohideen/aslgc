@@ -3,14 +3,14 @@ from django.contrib import admin
 admin.autodiscover()
 from library.views import *
 urlpatterns = patterns('',
-	url(r'^$',login_page),
-	url(r'^login/',login),
+	
+	url(r'^$',login),
 	url(r'^home/',home),
 	url(r'^euser/',euser),
 	url(r'^ebook/',ebook),
 	url(r'^booklend/',booklend),
 	url(r'^stock/',stock),
-	url(r'^user/',user),
+	url(r'^user/',userd),
 
 	
 	
