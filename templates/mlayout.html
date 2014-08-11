@@ -1,0 +1,122 @@
+<html><title>Member Home</title>
+<head><style type="text/css">
+h1 {
+    text-shadow: 5px 5px 5px #FFFF00;
+    color: white;
+    font-size: 55px;
+
+}
+h2 {
+    text-shadow: 5px 5px 5px yellow;
+    color: black;
+    font-size: 40px;
+
+}
+.menu
+{
+    height: 25px;
+    background-color: #111111;
+}
+
+.menu a 
+{
+    text-shadow: 5px 5px 5px #FF0000;
+    color : white;
+    text-decoration : none;    
+}
+
+.menu a:hover
+{
+    color : red;
+    text-decoration : none;    
+    background-color:yellow;
+}
+
+.list
+{
+    list-style-type : none;
+    padding:0;
+}
+
+.item
+{
+    position     : relative;
+    display      : inline-block;
+    vertical-align : top;
+    width        : 150px;   
+}
+
+.item>.list
+{
+    display : none;
+    background-color : green;
+}
+
+.item:hover>.list
+{
+    display : block;    
+}
+
+a{text-decoration: none;font-size: 20px;}
+#content  input[type="submit"] {
+  background: url(/static/images/logout.png);
+  background: -moz-linear-gradient(top,  url(/static/images/logout.png) 100%);
+  background: -webkit-linear-gradient(top,  url(/static/images/logout.png) 100%);
+  background: -o-linear-gradient(top,  url(/static/images/logout.png) 100%);
+  background: -ms-linear-gradient(top,  url(/static/images/logout.png) 100%);
+  background: linear-gradient(top,  url(/static/images/logout.png) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fee79a', endColorstr='#fec151',GradientType=0 );
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  border-radius: 30px;
+  -webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+  -moz-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+  -ms-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+  -o-box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+  border: 1px solid black;
+  color: red;
+  cursor: pointer;
+  float: right;
+  font: bold 15px Helvetica, Arial, sans-serif;
+  height: 35px;
+  margin: -5px 1px 35px 15px;
+  position: relative;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+  width: 120px;
+}
+#content  input[type="submit"]:hover {
+  background: rgb(254,193,81);
+  background: url(/static/images/logout.png);
+  background: -moz-linear-gradient(top,  url(/static/images/logout.png) 100%);
+  background: -webkit-linear-gradient(top,  url(/static/images/logout.png) 100%);
+  background: -o-linear-gradient(top,  url(/static/images/logout.png) 100%);
+  background: -ms-linear-gradient(top,  url(/static/images/logout.png) 100%);
+  background: linear-gradient(top,  url(/static/images/logout.png) 100%);     
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fec151', endColorstr='#fee79a',GradientType=0 );
+}
+
+	
+</style></head>
+<body>
+<div id ="header" style="margin-left:-10;margin-top:-10;"><img src="/static/images/aslgc.jpg" alt="Logo" height="75px" width="1368.48px">
+<!-- <h1 style="margin-bottom:0;margin-top:-10;margin-left:-10;height:125px;background-color:#000000;text-align:center;margin-right:-8">AHLUS SUNNAH LIBRARY AND GUIDANCE CENTRE</h1>
+ --></div>
+<div align="center" class="menu" style="background-color:green;margin-left:-10;height:30px;margin-right:-8;float:center;">
+<section id="content">    
+<a href="/mlogin/"><input type="submit" id="logout" value="" /></a></section>
+<a href="/mhome/">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="/mstock/">Stock Details</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="/muser/">Member Detail</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<div align="center" id="content" style="height:475px;">
+	{% block content %}
+	{% endblock %}
+</div>
+<div id="footer"><h6 style="font-size:10px;margin-bottom:15;margin-left:-10;margin-right:-8;height:11px;color:white;clear:both;background-color:#000000;text-align:center;">Copyright © AHLUS SUNNAH LIBRARY AND GUIDANCE CENTRE,ALANDUR,CHENNAI-16</h6></div>
+
+
+</body>
+</html>

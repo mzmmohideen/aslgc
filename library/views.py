@@ -29,6 +29,13 @@ def mlogin(request):
 @login_required
 def mhome(request):
   return render(request,'mhome.html')
+@login_required
+def muser(request):
+  return render(request,'muser.html')
+@login_required
+def mstock(request):
+  return render(request,'mstock.html')
+
 
 def login_check(request):
   username = request.POST['username']
@@ -268,9 +275,10 @@ def bookreturns(request):
       bookdetail = book.objects.get(bid = bid)
       datadump = booklend.objects.get(book=bookdetail)
       # if datadump.status = 'Issued' : 
-      datadump.status = post['status']     
-      datadump.quantity = datadump.quantity +1
-      datadump.save()
+      datadump.status = post['status'] 
+      datadump.save()    
+      bookdetail.quantity = bookdetail.quantity +1
+      bookdetail.save()
       dump = 'Book has been Returned Successfully!'
       # else : 
       dump = 'Nothing to Return...'
@@ -510,11 +518,19 @@ def issued(request):
         curr_book.quantity = curr_book.quantity -1      
         curr_book.save() 
         dump = 'Book Has Been Issued Successfully!!!'
-        try:        
+        # try: 
+        
+        if booklend.objects.get(user=curr_user,book=curr_book):
+          get_book = booklend.objects.get(user=curr_user,book=curr_book)
+          get_book.status = status
+          get_book.doi=doi
+          get_book.dor=dor
+          get_book.save()
+        else:       
           booklend.objects.create(user=curr_user,book=curr_book,status=status,doi=doi,dor=dor)
           print booklend.objects.get(bid=bid)
-        except Exception as e:
-          print e 
+        # except Exception as e:
+        #   print e 
       else :
         dump = 'No More Copies are Available!'
         

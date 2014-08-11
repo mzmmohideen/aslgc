@@ -1,33 +1,27 @@
-
+{% extends "mlayout.html" %}
+{% block content %}
+{% csrf_token %}
 <html>
 <head>
-	<title>Home</title>
+	<title>Member Home</title>
 	<style type="text/css">
 	b{ text-align: center;
 	   text-shadow: 5px 5px 5px #FF0000;
-	   font-size: 30px;}
+	   color: white;
+	   font-size: 35px;}
 	p {
-    text-shadow: 5px 5px 5px #FF0000;
-    font-size: 50px;
+    text-shadow: 5px 5px 5px yellow;
+    color: white;
+    font-size: 55px;
 
 }
 	</style>
 </head>
-<body bgcolor="DarkSeaGreen"></br/><br/></br/>
-<div align="center" class="menu" style="background-color:green;margin-left:-10;height:30px;margin-right:-8;float:center;">
-<section id="content">    
-<a href="/logout/"><input type="submit" id="logout" value="" /></a></section>
-<a href="/home/">Home</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="/stock/">stock Details</b>
-<a href="/user/">Member Details</a>
-</div>
-
-<p>Welcome Member<br/>
+<body background="/static/images/islamic.jpg"></br/><br/></br/>
+<p>Welcome<br/>
  to<br/>
   Ahlus Sunnah Library and Guidance Centre,<br/></p>
 <b>Alandur,Chennai-600016.</b>
  <!-- <img src="/home/ithoughtz/repocitory/aslgc/static/image/loginbg.jpg" alt="Welcome Image"> -->
-
-<div id="footer"><h6 style="font-size:10px;margin-bottom:15;margin-left:-10;margin-right:-8;height:11px;color:white;clear:both;background-color:#000000;text-align:center;">Copyright © AHLUS SUNNAH LIBRARY AND GUIDANCE CENTRE,ALANDUR,CHENNAI-16</h6></div>
-
 </body></html>
+{% endblock %}
