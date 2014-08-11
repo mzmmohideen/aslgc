@@ -1,58 +1,78 @@
 <html>
 <head><title>Login</title>
+<link rel="stylesheet" type="text/css" href="/static/css/style.css" />
 <style type="text/css">
-div.box
-{
-    -moz-box-sizing: box; /* Firefox */
-    box-sizing: box;
-    width: 50%;
-    
-}
+/*h1 {
+    text-shadow: 5px 5px 5px red	;
+    color: white;
+    font-size: 50px;
 
-b{text-align: center;font-size: 18px;}
+}
+h2 {
+    text-shadow: 5px 5px 5px green	;
+    color: white;
+    font-size: 30px;
+
+}
+b{text-align: center;font-size: 18px;}*/
 </style>
 </head>
 <body bgcolor="darkseagreen"><br/><br/><br/>
-{{ state }}
-<div align="center"><h1>Ahlus Sunnah Library and Guidance Centre</h1>
+<!-- {{ state }} -->
+<div align="center" class="container">
+  <section id="content">    
+  <img src="/static/images/aslgc.jpg" width="400px" height="90px">
+
 <h2>Alandur,Chennai-600016.</h2>
-<form accept="" location="/home/" method="POST">{% csrf_token %}<br/><br/>
-{% if next %}
-		<input type="hidden" name="next" value="{{ next }}" />
-		{% endif %}
-<h2>User Login</h2>
-	<div class="box">Username &nbsp;:<input type="text" value="{{ username}}" name="username"/></div><br/>
-	<div class="box">Password &nbsp;:<input type="password" value="" name="password"/></div><br/>
-	<br><button type="button" onclick="Login(this.form)">&nbsp;<b>Login</b></button> 
-	<!-- <input type="submit" value="Login"> -->
+<form action=""> <!-- name="form" accept="" location="/home/" method="POST">{% csrf_token %} --><br/>
+<!-- {% if next %} -->
+	<!-- 	<input type="hidden" name="next" value="{{ next }}" />
+		{% endif %} -->
+<b>Admin Login</b><br/>
+<div>
+        <input type="text" placeholder="Username" required="" id="username" />
+      </div>
+      <div>
+        <input type="password" placeholder="Password" required="" id="password" />
+      </div>
+      <div>
+        <!-- <input type="submit" onclick="Login(form)" value="Login" /> -->
+
+	<!-- <div class="box">Username &nbsp;:<input type="text" value="" name="username"/></div><br/>
+	<div class="box">Password &nbsp;:<input type="password" value="" name="password"/></div><br/> -->
+	<br><button type="button" onclick="Login(form)">&nbsp;<b>Login</b></button> 
 	<input type="reset" value="Reset">
-</div>
+	<!-- <button  type="reset"  ><b>Reset</b></button> --> <a href="/mlogin/">Member Login...</a>
+</div></section>
 </form>
 
  <script>
 	function Login(form)
 	{
-
+		
 		$.ajax({
-			type:"POST",
-			url:"/login/",
+			type:'POST',
+			url:'/login/',
 			data:{
 				username:form.username.value,
 				password:form.password.value,
 				csrfmiddlewaretoken:'{{ csrf_token }}',
 			},
-			success: function(response){
-			
-		}
-		});
-		// if (form.username.value == "aslgc" && form.password.value == "aslgc123") {
-
-		// 	// window.location.href = "/home";
-		// }
-		// else{"Username and Password Doesn't Match!"}
-	}
+			success:function(response){
+				console.log(response)
+				if (response == "login success") {
+					window.location.href = "/home";
+				}
+				else {alert("Please Check Username and Password!") }
+				// alert("success");
+			}
+		})
+		
+		
+																																			}
 </script> 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </body>
 </html>
 
+																																							

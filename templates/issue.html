@@ -1,0 +1,174 @@
+{% extends "layout.html" %}
+{% block content %}
+<html>
+<head><title>Lending Book Register</title>
+<style type="text/css">
+h1{text-align: center;}
+p {
+    width: 220px;
+    padding: 10px;
+    border: 5px solid gray;
+    margin: 0px;
+}
+
+b{text-align: center;font-size: 18px;}
+</style>
+</head>
+<body bgcolor="DarkSeaGreen">
+<h1>Library Lending Register</h1>
+<br/> <form id="Form" style="float:left;&nbsp;"><h2>User Details:</h2>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENTER Member ID &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id="uid" onmouseout="memberSearch()" name="uid"/><br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Member Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id="uname" name="uname"/><br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contact Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id="mobile" name="mobile"/><br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<textarea rows="2" cols="25" id="uaddr" name="uaddr"></textarea><br/>
+   <div align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Date of Issue  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; <input type="button" onclick="Issue()" name="doi" id="doi"> </div>
+     
+   </form>
+
+<form id="Form1"><h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Book Details:</h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Enter Book ID : <input type="text" value="" id="bid" name="bid" onmouseout="bookSearch()"/><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Book Title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input type="text" value="" id="btitle" name="btitle"/><br/>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Author &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  : <input type="text" value="" id="author" name="author"/><br/><br/>&nbsp;
+       Date of Return&nbsp;&nbsp;&nbsp;: <input type="button" onclick="Issue()" id="dor" name="dor"><br/><div><br/><br/><br/>
+
+       	 <div align="center"><button type="button" value="Issued" id="status" name="status" onclick="Submit()"><b>Issue</b></button>
+         <button type="button" onclick="Clear()"><b>Clear</b></button><br/><br/><br/></div>
+       	 
+</form>   
+<script src="{{ STATIC_URL }}js/min.js"></script>
+ <script type="text/javascript">
+
+function dateMY(date) {
+    var d = date.getDate();
+    var m = date.getMonth() + 1;
+    var y = date.getFullYear();
+    return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+}
+function Issue()
+{
+
+  var e = new Date();
+
+document.getElementById("doi").value = dateMY(e);
+var d = new Date();
+d.setDate(d.getDate() + 15);
+
+document.getElementById("dor").value = dateMY(d);
+}
+function memberSearch()
+   {
+     var uid = document.getElementById("uid").value;
+
+  
+
+  $.ajax({
+    type:'POST',
+    url:'/issue/',
+    data:{
+      uid:uid,
+
+      csrfmiddlewaretoken:'{{csrf_token}}',
+    },
+  success : function(response)
+    {
+  console.log(response);
+  // response.style.display = "none";
+  document.getElementById('uname').value=response.uname;
+  document.getElementById('mobile').value=response.mobile;
+  document.getElementById('uaddr').value=response.uaddr;
+  if(response=='none'){alert('Member ID DOES NOT EXISTS !!!!!!!!!')}
+      },
+    });
+   }
+
+function bookSearch()
+   {
+     var bid = document.getElementById("bid").value;
+
+  
+
+  $.ajax({
+    type:'POST',
+    url:'/bookdetails/',
+    data:{
+      bid:bid,
+
+      csrfmiddlewaretoken:'{{csrf_token}}',
+    },
+  success : function(response)
+    {
+  console.log(response);
+  // response.style.display = "none";
+  document.getElementById('btitle').value=response.btitle;
+  document.getElementById('author').value=response.author;
+   if(response=='none'){alert('Book ID DOES NOT EXISTS !!!!!!!!!')}
+      },
+    });
+   }
+
+
+function Submit()
+{
+    var bid = document.getElementById("bid").value;
+    var btitle = document.getElementById("btitle").value;
+    var uid = document.getElementById("uid").value;
+    var uname = document.getElementById("uname").value;
+    var status = document.getElementById("status").value;
+    var doi = document.getElementById("doi").value;
+    var dor = document.getElementById("dor").value;
+  //   var all={
+  //   bid : bid,
+  //   btitle : btitle,
+  //   quantity : quantity,
+  //   uid : uid,
+  //   uname : uname,
+  //   status : status,
+  //   doi : doi,
+  //   dor : dor,
+  // };
+  // console.log(all)
+  $.ajax({
+    type: "POST",
+    url: /issued/,
+    data: {
+      bid : bid,
+      btitle : btitle,
+      uid : uid,
+      uname : uname,
+      status : status,
+      doi : doi,
+      dor : dor,
+      csrfmiddlewaretoken: '{{csrf_token}}',
+    },
+
+    success : function(response){
+      alert(response)
+      console.log(response);
+  },
+});
+  
+}
+function Clear()
+{
+document.getElementById("Form").reset();
+document.getElementById("Form1").reset();
+document.getElementById("Form2").reset();
+
+}
+
+</script>
+	 	
+</body>
+</html>
+{% endblock %}
+
+
+
+<!-- function pad(s) { return (s < 10) ? '0' + s : s; }
+  var d = new Date(inputFormat);
+  return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+  var e = new Date(inputFormat);
+  e.setDate(e.getDate() + 15);
+  return [pad(e.getDate()), pad(e.getMonth()+1), e.getFullYear()].join('/');
+} -->

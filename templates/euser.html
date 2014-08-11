@@ -1,7 +1,7 @@
 <{% extends "layout.html" %}
 {% block content %}
 <html>
-<head><title>Enroll User</title>
+<head><title>Enroll Member</title>
 <style type="text/css">
 h1{text-align: center;}b{text-align: center;font-size: 18px;}
 </style>
@@ -9,63 +9,25 @@ h1{text-align: center;}b{text-align: center;font-size: 18px;}
 <body bgcolor="DarkSeaGreen">
 {% csrf_token %}
 <br/><br/><br/><br/><br/>
-<h1>User Enroll:</h1><div align="center">
-<form><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;
-     NAME 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id='name' name="uname"/>
-     &nbsp;&nbsp;&nbsp;<div align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-     GENDER &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;<input type="radio" id = "gender" value="Male" name="gender" />Male<input type="radio" id="gender" value="Female" name="gender" />Female <br/></div>
-	 ENTER User ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id='uid' name="uid"/><br/>
-	 Enter Contact Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id='mobile' name="mobile"/><br/>
-	 Enter Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id='uaddr' name="uaddr"/><br/><br/>
+<h2>Enroll Member</h2><div align="center">
+<form id="Form"><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;
+     MEMBER NAME 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id='uname' name="uname"/>
+     &nbsp;&nbsp;&nbsp;<br/>
+     GENDER &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;<input type="radio" id = "gender" value="Male" name="gender" />Male<input type="radio" id="gender" value="Female" name="gender" />Female <br/>
+	 ENTER Member ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id='uid' name="uid"/><br/>
+	 Enter Contact Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id='mobile' name="mobile"/><br/>
+	 Enter Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<textarea rows="2" cols="25" value="" id="uaddr" name="uaddr"></textarea><br/><br/>
 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	 <button type="button" onclick="userRegister()"><b>Register</b></button><br/>
 	 </form></div>
 
-
-<!-- <script>
-    function userRegister()
-	{
-		 var = document.getElementByName("uname").value;
-	}
-	$.ajax{(
-		type:'POST';
-		url:'/euser/';
-		datas:
-			csrfmiddlewaretoken:{{csrf_token}}
-			)}
-	console.log(response)
-	if(data==saved)alert{"UserRegistration is Successfull"}-->
-<!-- <script src="{{ STATIC_URL }}js/min.js"></script> -->
-<!-- <script type="text/javascript" >
-	function userRegister() {
-	var name = document.getElementById("uname").value;
-    var all={
-	name : name,
-	};
-
-	$.ajax({
-	type: "POST",
-	url: /events/,
-	data: {
-		all: all,
-		csrfmiddlewaretoken: '{{csrf_token}}',
-	},
-
-	success : function(response){
-	if (response=='saved'){alert('The Details have been saved successfully')}
-	console.log(response);
-	},
-	});
-	}
-</script>
--->
 <script src="{{ STATIC_URL }}js/min.js"></script>
 <script type="text/javascript">
   function userRegister() {
 	
-    // console.log(rationid.value)
+    
 
-    var name = document.getElementById("name").value;
+    var uname = document.getElementById("uname").value;
     // console.log(name.value);
     var gender = document.getElementById("gender").value;
 
@@ -86,8 +48,10 @@ h1{text-align: center;}b{text-align: center;font-size: 18px;}
     
 
     var uaddr = document.getElementById("uaddr").value;
+
+    // document.getElementById("Form").reset();
     var all = {
-        name: name,
+        uname: uname,
         gender: gender,
         uid: uid,
         mobile: mobile,
@@ -104,8 +68,7 @@ h1{text-align: center;}b{text-align: center;font-size: 18px;}
             csrfmiddlewaretoken: '{{ csrf_token }}',
         },
         success: function (response) {
-        	if (response=='saved'){alert('Registration Successfull !!!')}
-
+        	alert(response)            
             console.log(response);
             },
         });    

@@ -9,19 +9,83 @@ b{text-align: center;font-size: 18px;}
 </head>
 <body bgcolor="DarkSeaGreen">
 {% csrf_token %}
-<br/><br/><h1>Add Book</h1>
-<h2>
-<form ><br/><div align="center">
-       Enter Book Title &nbsp;&nbsp;&nbsp;: <input type="text" value="" idname="bname"/><br/>
-       Author Name  : <input type="text" value="" name="author"/><br/>
-      Publisher : <input type="text" value="" name="pname"><br/>
-      Enter Book ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input type="text" value="" name="bid"/><br/>
-       Total Quantity &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   : <input type="text"  value="" name="qt"/><br/></form>
-       	 <form><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       	 <button type="button" onclick="Submit()"><b>Enroll</b></button>
+<br/><br/><h2>Add Book</h2>
+<h3>
+<form id="Form"><br/><div align="center">
+       Enter Book Title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input type="text" value="" name="bname" id="btitle"><br/>
+       Category : <select id="category" >
+  <option>Aqeedha</option>
+  <option>Seerah</option>
+  <option>Daawah</option>
+  <option>Sunnah</option>
+</select><br/>
+      
+       Author Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <input type="text" value="" id="author" name="author"/><br/>
+      Publisher &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <input type="text" id="publisher" name="pname"><br/>
+      Enter Book ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input type="text" value="" id="bid" name="bid"/><br/>
+       <!-- Total Quantity &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   : <input type="text"  value="" name="qt" id="quantity"/><br/> -->
+       	 <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       	 <button type="button" onclick="Register()"><b>Enroll</b></button>
          
-         </form>   
+         </div></h3></form>   
 	 	
+<script src="{{ STATIC_URL }}js/min.js"></script>
+<script type="text/javascript">
+  function Register() {
+	
+    // console.log(rationid.value)
+
+    var btitle = document.getElementById("btitle").value;
+    var category = document.getElementById("category").value;
+    
+    // console.log(name.value);
+    
+    var author = document.getElementById("author").value;
+    var publisher = document.getElementById("publisher").value;
+   
+
+    // if (gender[0].checked) {
+    //     value = gender[0].value;
+    //     var gender = value;
+
+    // } else {
+    //     var gender = gender[1].value;
+    // }
+    var bid = document.getElementById("bid").value;
+    // var quantity = document.getElementById("quantity").value;
+    
+    
+    document.getElementById("Form").reset();
+    var all = {
+        btitle: btitle,
+        category: category,
+        publisher: publisher,
+        author: author,
+        bid: bid,
+        // quantity: quantity,
+
+    };
+    console.log(all)
+
+    $.ajax({
+        type: "POST",
+        url: '/ebook/',
+        data: {
+            all: all,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+        },
+        success: function (response) {
+          // console.log(response);        	
+            alert(response)
+            console.log(response);
+            },
+        });    
+
+}
+    
+
+</script>
+
 </body>
 </html>
 {% endblock %}

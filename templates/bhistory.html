@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block content %}
+<html>
+<head><title>User Details</title>
+<style type="text/css">
+h1{text-align: center;}
+b{text-align: center;font-size: 18px;}
+</style>
+</head><body bgcolor="DarkSeaGreen">
+<type id="user_id">
+<type id="book_id">
+<type id="status">
+<type id="doi">
+<type id="dor">
+<h1>Books Details:</h1><br/>
+	<div align="center"><form id="Form">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enter  Book ID 	:<input type="text" id="bid" name="bid" onmouseout="bookSearch()" /><button type="button" onclick="Search()">Search</button><br/> 
+  Book Name :<input type="text" name="btitle" id="btitle"><br/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity :<input type="text" name="quantity" id="quantity"><br/>
+  <br/> </form></div>
+   <div><table  align="center"  bgcolor="white" class='stockdetail'>
+    </table></div><br/>
+	 <script src="{{ STATIC_URL }}js/min.js"></script>
+	 <script type="text/javascript">
+	 
+function bookSearch()
+   {
+     var bid = document.getElementById("bid").value;
+  $.ajax({
+    type:'POST',
+    url:'/stockdetails/',
+    data:{
+      bid:bid,
+
+      csrfmiddlewaretoken:'{{csrf_token}}',
+    },
+  success : function(response)
+    {
+  console.log(response);
+  // response.style.display = "none";
+  document.getElementById('btitle').value=response.btitle;
+  document.getElementById('quantity').value=response.quantity;
+  if(response=='none'){alert('Book ID DOES NOT EXISTS !!!!!!!!!')}
+      },
+    });
+   }
+
+    
+    
+function Search()
+{
+   var bid = document.getElementById("bid").value;
+
+  
+      
+      $.ajax({
+               type: "POST",
+               url: '/bhistory/',
+                data: {
+                     // post:'POST',
+                     bid:bid,
+                     csrfmiddlewaretoken: '{{csrf_token}}',
+                      },
+    success : function(response) {
+      var data=response['data'];
+       var str_head = '<th> Book ID </th><th> Book Name </th><th> User Id </th><th> User Name </th><th> Status </th><th> DateofIssue </th><th> dateofReturn </th>'
+         var startstr = '';
+         var str = '';
+         $('.stockdetail').empty();
+          
+
+        console.log(data)
+        if(response=='none'){alert('Book ID DOES NOT EXISTS !!!!!!!!!')}
+            for (i=0; i<data.length; i++)
+               { 
+               var bid = data[i]['bid'];
+               var btitle = data[i]['btitle'];
+               // var quantity = data[i]['quantity'];
+               var uid = data[i]['uid'];
+               var uname = data[i]['uname'];
+               var status = data[i]['status'];
+               var doi = data[i]['doi'];
+               var dor = data[i]['dor'];
+                
+               str += '<tr><td>'+bid+'</td><td>'+btitle+'</td><td>'+uid+'</td><td>'+uname+'</td><td>'+status+'</td><td>'+doi.split(" ")[0]+'</td><td>'+dor.split(" ")[0]+'</td></tr>';
+        
+               }
+               
+               var html = '<table><tr>'+str_head +'</tr>'+ str+'</table>';
+               console.log(html)
+               $('.stockdetail').append(html)  
+                 },
+    });
+ }
+   
+
+  	</script></body>
+    </html>
+	 {% endblock %}
+
+
+

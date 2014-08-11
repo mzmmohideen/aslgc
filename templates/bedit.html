@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block content %}
+<html>
+<head><title>Book Details</title>
+<style type="text/css">
+h1{text-align: center;}
+</style>
+</head>
+<body bgcolor="DarkSeaGreen"><br/>
+<h1>Book Details:</h1>
+<form id="Form"><br/><br/>
+	 ENTER BOOK ID :&nbsp;<input type="text" value="" id="bid" name="bid"/><button type="button" onclick="bookSearch()">Search</button><br/>
+	 Book Name &nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;<input type="text" value="" name="btitle" id="btitle"/><br/>
+	 Author :&nbsp;<input type="text" id="author" value="" name="author"/><br/>
+   Category :&nbsp;<input type="text" id="category" value="" name="category"/><br/>
+	 Publisher &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <input type="text" id="publisher" name="publisher"><br/>
+   Quantity &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <input type="text" id="quantity" name="quantity"><br/>
+        <br><button id="save"  type="button" name="save" onclick="Save()">Update</button></br>
+  
+	 </form>
+     	<script src="{{ STATIC_URL }}js/min.js"></script>
+	<script type="text/javascript">
+
+	function bookSearch()
+	 {
+     var bid = document.getElementById("bid").value;
+
+  
+
+  $.ajax({
+    type:'POST',
+    url:'/stockdetails/',
+    data:{
+      bid:bid,
+      csrfmiddlewaretoken:'{{csrf_token}}',
+    },
+    success : function(response)
+      {
+         console.log(response);
+  			// response.style.display = "none";
+  				document.getElementById('btitle').value=response.btitle;
+          document.getElementById('author').value=response.author;
+			    document.getElementById('category').value=response.category;
+			    document.getElementById('publisher').value=response.publisher;
+          document.getElementById('quantity').value=response.quantity;
+			    if(response=='none'){alert('Book ID DOES NOT EXISTS !!!!!!!!!')}
+			    	},
+			    });
+    
+	 }
+
+	function Save(){
+    
+    	var bid = document.getElementById("bid").value;
+        var btitle = document.getElementById("btitle").value;
+        var author = document.getElementById("author").value;
+        var category = document.getElementById("category").value;
+        var publisher = document.getElementById("publisher").value;
+        var quantity = document.getElementById("quantity").value;
+
+        
+
+        document.getElementById("Form").reset();
+   var all = {
+            bid: bid,
+            btitle: btitle,
+            author: author,
+            category: category,
+            publisher: publisher,
+            quantity: quantity,
+        };
+        // console.log()
+  
+  console.log(all)
+
+  $.ajax({
+                type: "POST",
+                url: '/bedit/',
+                data: {
+                  bid: bid,
+                  btitle: btitle,
+                  author: author,
+                  category: category,
+                  publisher: publisher,
+                  quantity: quantity,
+                  csrfmiddlewaretoken: '{{csrf_token}}',
+                      },
+  success:function(response){
+    if(response.data=='saved'){alert('Book Details have been Updated Successfully')}
+      
+    console.log(response);
+  },
+
+  });
+}
+</script>
+
+
+	 </body></html>
+
+	 {% endblock %}

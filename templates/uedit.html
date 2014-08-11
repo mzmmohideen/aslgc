@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block content %}
+<html>
+<head><title>User Details</title>
+<style type="text/css">
+h1{text-align: center;}
+</style>
+</head>
+<body bgcolor="DarkSeaGreen"><br/>
+<h1>Member Details:</h1>
+<form id="Form"><br/><br/>
+	 ENTER USER ID :&nbsp;<input type="text" value="" id="uid" name="uid"/><button type="button" onclick="memberSearch()">Search</button><br/>
+	 Name &nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;<input type="text" value="" name="uname" id="uname"/><br/>
+	 Contact Number :&nbsp;<input type="text" id="mobile" value="" name="mobile"/><br/>
+	 Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<textarea rows="2" cols="25" id="uaddr" name="uaddr"></textarea><br/>
+     <br><button id="save"  type="button" name="save" onclick="Save()">Update</button></br>
+  
+	 </form>
+     
+	<script src="{{ STATIC_URL }}js/min.js"></script>
+	<script type="text/javascript">
+
+	function memberSearch()
+	 {
+     var uid = document.getElementById("uid").value;
+
+  
+
+  $.ajax({
+    type:'POST',
+    url:'/uedit/',
+    data:{
+      uid:uid,
+      csrfmiddlewaretoken:'{{csrf_token}}',
+    },
+    success : function(response)
+      {
+         console.log(response);
+  			// response.style.display = "none";
+  				document.getElementById('uname').value=response.uname;
+			    document.getElementById('mobile').value=response.mobile;
+			    document.getElementById('uaddr').value=response.uaddr;
+			    if(response=='none'){alert('Member ID DOES NOT EXISTS !!!!!!!!!')}
+			    	},
+			    });
+    
+	 }
+
+	function Save(){
+    
+    	  var uid = document.getElementById("uid").value;
+        var uname = document.getElementById("uname").value;
+        var mobile = document.getElementById("mobile").value;
+        var uaddr = document.getElementById("uaddr").value;
+
+        document.getElementById("Form").reset();
+   var all = {
+            uid: uid,
+            uname: uname,
+            mobile: mobile,
+            uaddr: uaddr,
+            
+        };
+  
+  console.log(all)
+
+  $.ajax({
+                type: "POST",
+                url: '/modify/',
+                data: {
+                  uid: uid,
+                  uname: uname,
+                  mobile: mobile,
+                  uaddr: uaddr,
+
+                  csrfmiddlewaretoken: '{{csrf_token}}',
+                      },
+  success:function(response){
+    if(response=='saved'){alert('Member Details have been Updated')}
+    console.log(response);
+  },
+
+  });
+}
+</script>
+   </body></html>
+
+	 {% endblock %}

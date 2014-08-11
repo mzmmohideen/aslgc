@@ -1,0 +1,74 @@
+
+
+
+<html>
+<head><title>Login</title>
+<style type="text/css">
+div.box
+{
+    -moz-box-sizing: box; /* Firefox */
+    box-sizing: box;
+    width: 50%;
+    
+}
+h1 {
+    text-shadow: 5px 5px 5px red	;
+    color: white;
+    font-size: 50px;
+
+}
+h2 {
+    text-shadow: 5px 5px 5px green	;
+    color: white;
+    font-size: 30px;
+
+}
+b{text-align: center;font-size: 18px;}
+</style>
+</head>
+<body bgcolor="darkseagreen"><br/><br/><br/>
+{{ state }}
+<div align="center"><h1>Ahlus Sunnah Library and Guidance Centre</h1>
+<h2>Alandur,Chennai-600016.</h2>
+<form> <!-- name="form" accept="" location="/home/" method="POST">{% csrf_token %} --><br/><br/>
+<!-- {% if next %} -->
+	<!-- 	<input type="hidden" name="next" value="{{ next }}" />
+		{% endif %} -->
+<h2>Member Login</h2>
+	<div class="box">Username &nbsp;:<input type="text" value="" name="username"/></div><br/>
+	<div class="box">Mobile No&nbsp;:<input type="password" value="" name="mobile"/></div><br/>
+	<br><button type="button" onclick="Login(form)">&nbsp;<b>Login</b></button> 
+	<!-- <input type="submit" value="Login"> -->
+	<button  type="reset"  ><b>Reset</b></button>
+</div>
+</form>
+
+ <script>
+	function Login(form)
+	{
+		
+		$.ajax({
+			type:'POST',
+			url:'/mlogin/',
+			data:{
+				uname:form.username.value,
+				mno:form.mobile.value,
+				csrfmiddlewaretoken:'{{ csrf_token }}',
+			},
+			success:function(response){
+				console.log(response)
+				if (response == "login success") {
+					window.location.href = "/mhome";
+				}
+				else {alert("Please Check Username and Password!") }
+				// alert("success");
+			}
+		})
+		
+		
+	}
+</script> 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</body>
+</html>
+

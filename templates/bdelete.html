@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% block content %}
+<html>
+<head><title>User Details</title>
+<style type="text/css">
+h1{text-align: center;}
+b{text-align: center;font-size: 18px;}
+</style>
+</head>
+<body bgcolor="DarkSeaGreen"><br/>
+<h2>Book Details:</h2><div align="center">
+<form id="Form"><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	 ENTER BOOK ID :&nbsp;<input type="text" value="" id="bid" name="bid"/><button type="button" onclick="bookSearch()">Search</button><br/>
+   Book Name &nbsp;&nbsp;&nbsp;&nbsp; :&nbsp;<input type="text" value="" name="btitle" id="btitle"/><br/>
+   Author :&nbsp;<input type="text" id="author" value="" name="author"/><br/>
+   Publisher &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <input type="text" id="publisher" name="publisher"><br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" id="delete" name="delete" onclick="Delete()"><b>Delete</b></button>
+	 </form></div>
+
+ <script src="{{ STATIC_URL }}js/min.js"></script>
+ <script type="text/javascript">
+ function bookSearch()
+	 {
+     var bid = document.getElementById("bid").value;
+
+  
+
+  $.ajax({
+    type:'POST',
+    url:'/stockdetails/',
+    data:{
+      bid:bid,
+
+      csrfmiddlewaretoken:'{{csrf_token}}',
+    },
+  success : function(response)
+    {
+  console.log(response);
+  // response.style.display = "none";
+  document.getElementById('btitle').value=response.btitle;
+  document.getElementById('author').value=response.author;
+  document.getElementById('publisher').value=response.publisher;
+  if(response=='none'){alert('Book ID DOES NOT EXISTS !!!!!!!!!')}
+      },
+    });
+   }
+
+	 function Delete () {
+    
+	 	   var bid = document.getElementById("bid").value;
+       var btitle = document.getElementById("btitle").value;
+       var author = document.getElementById("author").value;
+       var publisher = document.getElementById("publisher").value;
+
+   var all = {
+            bid: bid,
+            btitle: btitle,
+            author: author,
+            publisher: publisher,
+            
+            
+        };
+  document.getElementById("Form").reset();
+  console.log(all)
+
+  $.ajax({
+                type: "POST",
+                url: '/bdelete/',
+                data: {
+                  bid: bid,
+                  btitle: btitle,
+                  author: author,
+                  publisher: publisher,
+
+                  csrfmiddlewaretoken: '{{csrf_token}}',
+                      },
+  success:function(response){    
+    console.log(response);
+
+    if(response.data == 'none'){alert('Book Details Not Found!')}
+  },
+
+  });
+  
+
+}
+</script>
+	 
+	 </body></html>
+	 
+	 {% endblock %}

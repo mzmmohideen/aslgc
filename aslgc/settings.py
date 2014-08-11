@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+# MEDIA_ROOT = '/home/ithoughtz/repocitory/aslgc/static/images/aslgc.jpg'
+# MEDIA_URL = '/home/ithoughtz/repocitory/aslgc/static/images/aslgc.jpg/'
+
 os.environ['DJANGO_SETTINGS_MODULE'] = 'aslgc.settings'
 
 
@@ -39,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'library',
+    'south',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -61,7 +65,7 @@ WSGI_APPLICATION = 'aslgc.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'asglc',
+        'NAME': 'aslgc',
          'USER' : '',
          'PASSWORD' : '',
 

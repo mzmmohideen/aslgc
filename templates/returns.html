@@ -1,0 +1,113 @@
+{% extends "layout.html" %}
+{% block content %}
+<html>
+<head><title>Lending Book Register</title>
+<style type="text/css">
+h1{text-align: center;}
+p {
+    width: 220px;
+    padding: 10px;
+    border: 5px solid gray;
+    margin: 0px;
+}
+
+b{text-a&nbsp;lign: center;font-size: 18px;}
+</style>
+</head>
+<body bgcolor="DarkSeaGreen">
+<h1>Library Lending Register</h1><!-- 
+<br/> <form id="Form" style="float:left;&nbsp;"><h2>User Details:</h2>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENTER USER ID &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<input type="text" value="" id="uid" name="uid"/><br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id="uname" name="uname"/><br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contact Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id="mobile" name="mobile"/><br/>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<input type="text" value="" id="uaddr" name="uaddr"/><br/> -->
+	 <!-- </form> -->
+
+<form id="Form1"><h2 align="center">Book Returns:</h2>
+Enter Book ID &nbsp;&nbsp;: <input type="text" value="" id="bid" onmouseout="bookSearch()" name="bid"/><br/>
+Book Title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input type="text" value="" id="btitle" name="btitle"/><br/>Member ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id="uid" name="uid"/><br/>
+   Member Name  :  <input type="text" value="" id="uname" name="uname"/><br/>
+
+       <div align="center">Date of Issue &nbsp;&nbsp;: <input type="button" name="doi" id="doi"> </div>
+       <div align="center">Date of Return: <input type="button" name="dor" id="dor"><div><br/><br/><br/>
+       	 <button type="button" value="Returned" id="status" name="status" onclick="Return()"><b>Return</b></button>
+         <button type="reset"><b>Clear</b></button><div style="margin-bottom:30;"><br/><br/><br/></div>
+       	 
+</form> 
+<script src="{{ STATIC_URL }}js/min.js"></script>
+<script>
+// function dateToYMD(date) {
+//     var d = date.getDate();
+//     var m = date.getMonth() + 1;
+//     var y = date.getFullYear();
+//     return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+// }
+function Return()
+{
+  var status = document.getElementById("status").value;
+  var bid = document.getElementById('bid').value;
+  //  var all = {
+  //           status:status,
+  //           bid:bid,
+            
+  //       };
+  
+  // console.log(all)
+
+  $.ajax({
+                type: "POST",
+                url: '/bookreturns/',
+                data: {
+                  status:status,
+                  bid:bid,
+                  csrfmiddlewaretoken: '{{csrf_token}}',
+                      },
+  success:function(response){
+    alert(response)
+    console.log(response);
+    
+},
+});
+}
+function bookSearch()
+   {
+     var bid = document.getElementById("bid").value;
+
+  
+
+  $.ajax({
+    type:'POST',
+    url:'/bookreturn/',
+    data:{
+      bid:bid,
+
+      csrfmiddlewaretoken:'{{csrf_token}}',
+    },
+success : function(response)
+    {
+      
+  console.log(response);
+  // response.style.display = "none";
+  document.getElementById('btitle').value=response.data[0].btitle;  
+  document.getElementById('uid').value=response.data[0].uid;
+  document.getElementById('uname').value=response.data[0].uname;
+  document.getElementById('doi').value=response.data[0].doi.split(" ")[0];
+  document.getElementById('dor').value=response.data[0].dor.split(" ")[0];
+   
+   if(response=='none'){alert('Book ID DOES NOT EXISTS !!!!!!!!!')}
+      },
+    });
+   }
+// function Clear()
+// {
+// document.getElementById("Form").reset();
+// document.getElementById("Form1").reset();
+// document.getElementById("Form2").reset();
+
+// }
+
+</script>
+	 	
+</body>
+</html>
+{% endblock %}
