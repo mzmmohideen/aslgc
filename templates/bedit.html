@@ -14,7 +14,7 @@ h1{text-align: center;}
 	 Author :&nbsp;<input type="text" id="author" value="" name="author"/><br/>
    Category :&nbsp;<input type="text" id="category" value="" name="category"/><br/>
 	 Publisher &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <input type="text" id="publisher" name="publisher"><br/>
-   Quantity &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <input type="text" id="quantity" name="quantity"><br/>
+   <!-- Quantity &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <input type="text" id="quantity" name="quantity"><br/> -->
         <br><button id="save"  type="button" name="save" onclick="Save()">Update</button></br>
   
 	 </form>
@@ -42,7 +42,7 @@ h1{text-align: center;}
           document.getElementById('author').value=response.author;
 			    document.getElementById('category').value=response.category;
 			    document.getElementById('publisher').value=response.publisher;
-          document.getElementById('quantity').value=response.quantity;
+          // document.getElementById('quantity').value=response.quantity;
 			    if(response=='none'){alert('Book ID DOES NOT EXISTS !!!!!!!!!')}
 			    	},
 			    });
@@ -56,7 +56,7 @@ h1{text-align: center;}
         var author = document.getElementById("author").value;
         var category = document.getElementById("category").value;
         var publisher = document.getElementById("publisher").value;
-        var quantity = document.getElementById("quantity").value;
+        // var quantity = document.getElementById("quantity").value;
 
         
 
@@ -67,7 +67,7 @@ h1{text-align: center;}
             author: author,
             category: category,
             publisher: publisher,
-            quantity: quantity,
+            // quantity: quantity,
         };
         // console.log()
   
@@ -82,7 +82,7 @@ h1{text-align: center;}
                   author: author,
                   category: category,
                   publisher: publisher,
-                  quantity: quantity,
+                  // quantity: quantity,
                   csrfmiddlewaretoken: '{{csrf_token}}',
                       },
   success:function(response){

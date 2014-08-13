@@ -24,7 +24,7 @@ b{text-a&nbsp;lign: center;font-size: 18px;}
 	 <!-- </form> -->
 
 <form id="Form1"><h2 align="center">Book Returns:</h2>
-Enter Book ID &nbsp;&nbsp;: <input type="text" value="" id="bid" onmouseout="bookSearch()" name="bid"/><br/>
+Enter Book ID &nbsp;&nbsp;: <input type="text" value="" id="bid" onPointerMove="bookSearch()" name="bid"/><br/>
 Book Title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input type="text" value="" id="btitle" name="btitle"/><br/>Member ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id="uid" name="uid"/><br/>
    Member Name  :  <input type="text" value="" id="uname" name="uname"/><br/>
 
@@ -35,7 +35,13 @@ Book Title &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input type="text" 
        	 
 </form> 
 <script src="{{ STATIC_URL }}js/min.js"></script>
-<script>
+<script type="text/javascript">
+$(document).on('keydown','#bid',function(d) {
+  var keyCode = d.keyCode || d.which;
+  if(keyCode == 9) {    
+    bookSearch();
+  }
+});
 // function dateToYMD(date) {
 //     var d = date.getDate();
 //     var m = date.getMonth() + 1;

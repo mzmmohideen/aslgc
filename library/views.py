@@ -10,6 +10,7 @@ from library.models import user,book
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.contrib.auth.models import User
 
 def logout_view(request):
     logout(request)
@@ -20,15 +21,34 @@ def logout_view(request):
 # from library.models import *
 def loginpage(request):
   return render(request,'login.html')
+# def mlogin(request):
+#   if request.method == 'POST':
+#     post = request.POST
+#     uname = post['uname'] 
+#     mobile = post['mobile']
+#     print uname,mobile
+#     curr_user = User.objects.get(username=uname)
+#     if curr_user.is_superuser:
+#       user = authenticate(username=uname, password=mobile)
+#       print user
+#     # user1 = user.objects.get(uname =uname, mobile=mobile)
+#     # if 
+#     if user:
 
-def mlogin(request):
-  return render(request,'mlogin.html')
+#       login(request, user)
+#       print "login success"          
+#       dump = "login success"
+#       return HttpResponse(content=json.dumps(dump),content_type='Application/json')
 
 
 
+#   return render(request,'mlogin.html')
 @login_required
 def mhome(request):
   return render(request,'mhome.html')
+@login_required
+def meissue(request):
+  return render(request,'meissue.html')
 @login_required
 def muser(request):
   return render(request,'muser.html')
@@ -40,11 +60,15 @@ def mstock(request):
 def login_check(request):
   username = request.POST['username']
   password = request.POST['password']
+  curr_user = User.objects.get(username=username)
   user = authenticate(username=username, password=password)
   if user is not None:
     if user.is_active:
         login(request, user)
         print "login success"
+        if curr_user.is_superuser:
+          dump = "superadmin"
+          return HttpResponse(content=json.dumps(dump),content_type='Application/json')
         # returnsn HttpResponse(content=json.dumps(dump),content_type='Application/json')
         # return HttpResponseRedirect("/home/")
         # return render(request,'home.html')
@@ -77,11 +101,14 @@ def euser(request):
           dump = "Member ID Already Exist!"
 
         else:
+          # .create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+          duser = User.objects.create_user(data['uname'],'',data['mobile'])
           user.objects.create(uname = data['uname'],
                             gender = data['gender'],
                             uid = data['uid'],
                             mobile = data['mobile'],
                             uaddr = data['uaddr'],
+                            user =duser,  
                                             
                      )
           
@@ -103,10 +130,14 @@ def ebook(request):
                                    publisher = data['publisher'],
                                    author = data['author'],
                                    )
-        if Book:
-          quantity = max([i.quantity for i in Book]) + 1
-          # Book[0].quantity + 1
-        dump = "New Book Recorded !!!"
+        # if Book:
+        #   # bookdetail = book.objects.get(bid = bid)
+        #   # bookdetail.quantity = bookdetail.quantity +1
+        #   # bookdetail.save()
+        #   print '?????'
+        #   # quantity = max([i.quantity for i in Book]) + 1
+        #   # Book[0].quantity + 1
+        
        
         if book.objects.filter(bid = data['bid']):
           dump = "Book ID Already Exist!"
@@ -116,8 +147,9 @@ def ebook(request):
                             publisher = data['publisher'],
                             author = data['author'],
                             bid = data['bid'], 
-                            quantity = quantity                       
+                            quantity = quantity                        
                             )
+          dump = "New Book Recorded !!!"
        
         
         return HttpResponse(content=json.dumps(dump),content_type='Application/json')
@@ -255,16 +287,54 @@ def bookreturn(request):
   if request.method == 'POST':
      post = request.POST
      bid = post['bid']
+
      book_d = book.objects.get(bid = bid)
      datadump = booklend.objects.filter(book = book_d)
-       
-
      for i in datadump:
         print '?????'
         data.append({'bid':i.book.bid,'btitle':i.book.btitle,'uid':i.user.uid,'uname':i.user.uname,'doi':str(i.doi),'dor':str(i.dor)})
         print data
      return HttpResponse(content=json.dumps(({'data': data})),content_type='Application/json')
   return render(request, 'returns.html')
+
+  # data = []
+  # temp = {}
+  # if request.method == 'POST':
+  #    post = request.POST
+  #    bid = post['bid']
+  #    book_d = book.objects.get(bid = bid)
+  #    datadump = booklend.objects.filter(book = book_d)
+  #    if datadump.bid == bid :
+  #      for i in datadump:
+  #         print '?????'
+  #         data.append({'bid':i.book.bid,'btitle':i.book.btitle,'uid':i.user.uid,'uname':i.user.uname,'doi':str(i.doi),'dor':str(i.dor)})
+  #         print data
+  #    else :
+  #       dump = 'none'
+
+  #   data = []
+  # temp = {}
+  # if request.method == 'POST':
+  #    post1 = request.POST
+  #    bid = post1['bid']
+  #    if post1.has_key('post'):
+  #     print '???'
+      
+  #    else:
+  #     book_d = book.objects.get(bid = bid)
+  #     if not booklend.objects.filter(bid=bid):
+  #       data = 'none'
+  #     else:
+  #       book_d = book.objects.get(bid = bid)
+  #       datadump = booklend.objects.filter(book = book_d)
+  #       for i in datadump:
+  #         print '?????'
+  #         data.append({'bid':i.book.bid,'btitle':i.book.btitle,'uid':i.user.uid,'uname':i.user.uname,'doi':str(i.doi),'dor':str(i.dor)})
+  #         print data
+  #    return HttpResponse(content=json.dumps(({'data': data})),content_type='Application/json')
+  # return render(request, 'returns.html')
+
+
 @login_required
 def bookreturns(request):
   temp = {}
@@ -274,14 +344,14 @@ def bookreturns(request):
       status = post['status']
       bookdetail = book.objects.get(bid = bid)
       datadump = booklend.objects.get(book=bookdetail)
-      # if datadump.status = 'Issued' : 
-      datadump.status = post['status'] 
-      datadump.save()    
-      bookdetail.quantity = bookdetail.quantity +1
-      bookdetail.save()
-      dump = 'Book has been Returned Successfully!'
-      # else : 
-      dump = 'Nothing to Return...'
+      if datadump.status == 'Issued' : 
+        datadump.status = post['status'] 
+        datadump.save()    
+        bookdetail.quantity = bookdetail.quantity +1
+        bookdetail.save()
+        dump = 'Book has been Returned Successfully!'
+      else : 
+        dump = 'Nothing to Return...'
       return HttpResponse(content=json.dumps(dump),content_type='Application/json')
   return render(request,'returns.html')
   
@@ -520,7 +590,7 @@ def issued(request):
         dump = 'Book Has Been Issued Successfully!!!'
         # try: 
         
-        if booklend.objects.get(user=curr_user,book=curr_book):
+        if booklend.objects.filter(user=curr_user,book=curr_book):
           get_book = booklend.objects.get(user=curr_user,book=curr_book)
           get_book.status = status
           get_book.doi=doi

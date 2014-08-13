@@ -17,7 +17,8 @@ table, caption, tbody, tfoot, thead, tr, th, td {
   background: transparent;
 }
 body {
-  background: #DCDDDF url(http://cssdeck.com/uploads/media/items/7/7AF2Qzt.png);
+  background-image: url(/static/images/aslhc.jpg);
+  /*background: #DCDDDF url(http://cssdeck.com/uploads/media/items/7/7AF2Qzt.png);*/
   color: #000;
   font: 14px Arial;
   margin: 0 auto;
@@ -197,7 +198,7 @@ form:after {
   border: 1px solid #D69E31;
   color: #85592e;
   cursor: pointer;
-  float: left;
+  float: center;
   font: bold 15px Helvetica, Arial, sans-serif;
   height: 35px;
   margin: 20px 0 35px 15px;
@@ -235,7 +236,7 @@ form:after {
   border: 1px solid #D69E31;
   color: #85592e;
   cursor: pointer;
-  float: left;
+  float: center;
   font: bold 15px Helvetica, Arial, sans-serif;
   height: 35px;
   margin: 20px 0 35px 15px;

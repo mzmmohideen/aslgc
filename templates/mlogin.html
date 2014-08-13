@@ -35,25 +35,27 @@ b{text-align: center;font-size: 18px;}
 	<!-- 	<input type="hidden" name="next" value="{{ next }}" />
 		{% endif %} -->
 <h2>Member Login</h2>
-	<div class="box">Username &nbsp;:<input type="text" value="" name="username"/></div><br/>
-	<div class="box">Mobile No&nbsp;:<input type="password" value="" name="mobile"/></div><br/>
-	<br><button type="button" onclick="Login(form)">&nbsp;<b>Login</b></button> 
+	<div class="box">Username &nbsp;:<input type="text" value="" id="uname" name="username"/></div><br/>
+	<div class="box">Mobile No&nbsp;:<input type="password" value="" id="mobile" name="mobile"/></div><br/>
+	<br><button type="button" onclick="Login()">&nbsp;<b>Login</b></button> 
 	<!-- <input type="submit" value="Login"> -->
 	<button  type="reset"  ><b>Reset</b></button>
 </div>
-<div align="right"><a href="/login/"><button type="button">&nbsp;<b>Back to Login</b></button></a> </div>
+<div align="right"><a href="/"><button type="button">&nbsp;<b>Back to Login</b></button></a> </div>
 </form>
 
  <script>
-	function Login(form)
+	function Login()
 	{
+		var uname = document.getElementById("uname").value;
+		var mobile = document.getElementById("mobile").value;
 		
 		$.ajax({
 			type:'POST',
 			url:'/mlogin/',
 			data:{
-				uname:form.username.value,
-				mno:form.mobile.value,
+				uname:uname,
+				mobile:mobile,
 				csrfmiddlewaretoken:'{{ csrf_token }}',
 			},
 			success:function(response){

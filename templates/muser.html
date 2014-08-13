@@ -65,55 +65,30 @@ h1{text-align: center;}
 
 
    <!-- <input type="text"  value="" id="uaddr" name="uaddr"/><br/> -->
-   <section id="content">
+   <section id="content">ENTER Member ID &nbsp;&nbsp;:&nbsp;<input type="text"  id="uid" name="uid"/>
 	 <button type="button" onclick="Search()">Display</button></section>
    <div><table  align="center"  bgcolor="#FFFFFF" class='memberdetail'>
     </table></div><br/>
 	 <script src="{{ STATIC_URL }}js/min.js"></script>
 	 <script type="text/javascript">
-	 // function memberSearch()
-	 // {
-  //    var uid = document.getElementById("uid").value;
-
-  
-
-  // $.ajax({
-  //   type:'POST',
-  //   url:'/user/',
-  //   data:{
-  //     uid:uid,
-
-  //     csrfmiddlewaretoken:'{{csrf_token}}',
-  //   },
-  // success : function(response)
-  //   {
-  // console.log(response);
-  // // response.style.display = "none";
-  // document.getElementById('uname').value=response.uname;
-  // document.getElementById('mobile').value=response.mobile;
-  // document.getElementById('uaddr').value=response.uaddr;
-  // if(response=='none'){alert('Member ID DOES NOT EXISTS !!!!!!!!!')}
-  //     },
-  //   });
-  //  }
+	 
 function Search()
 {
-   // var uid = document.getElementById("uid").value;
+   var uid = document.getElementById("uid").value;
 
   
       
       $.ajax({
                type: "POST",
-               url: '/userdetails/',
+               url: '/uhistory/',
                 data: {
                      // post:'POST',
-                     // uid:uid,
+                     uid:uid,
                      csrfmiddlewaretoken: '{{csrf_token}}',
                       },
     success : function(response) {
       var data=response['data'];
-       var str_head = '<th> User Id </th>  <th> User Name </th><th> Gender </th><th> Mobile Number </th><th> Address </th>'  
-       // <th> DateofIssue </th><th> dateofReturn </th>
+       var str_head = '<th> User Id </th>  <th> User Name </th><th> Book Id </th><th> Book Name </th><th> Status </th><th> DateofIssue </th><th> dateofReturn </th>'
          var startstr = '';
          var str = '';
          $('.memberdetail').empty();
@@ -123,14 +98,13 @@ function Search()
                { 
                var uid = data[i]['uid'];
                var uname = data[i]['uname'];
-               var gender = data[i]['gender'];
-               var mobile = data[i]['mobile'];               
-               var uaddr = data[i]['uaddr'];
-               // var doi = data[i]['doi'];
-               // var dor = data[i]['dor'];
+               var bid = data[i]['bid'];
+               var btitle = data[i]['btitle'];
+               var status = data[i]['status'];
+               var doi = data[i]['doi'];
+               var dor = data[i]['dor'];
                 
-               str += '<tr><td>'+uid+'</td><td>'+uname+'</td><td>'+gender+'</td><td>'+mobile+'</td><td>'+uaddr+'</td></tr>'; 
-               // <td>'+doi.split(" ")[0]+'</td><td>'+dor.split(" ")[0]+'</td>
+               str += '<tr><td>'+uid+'</td><td>'+uname+'</td><td>'+bid+'</td><td>'+btitle+'</td><td>'+status+'</td><td>'+doi.split(" ")[0]+'</td><td>'+dor.split(" ")[0]+'</td></tr>';
         
                }
                
@@ -140,61 +114,12 @@ function Search()
                  },
     });
  }
-   
-// function memberBook()
-//    {
-//      var uid = document.getElementById("uid").value;
-  //  var input = document.getElementById('user_id').value;
-    //   var input = document.getElementById("book_id").value;
-    //   var input = document.getElementById("status").value;
-    //   var input = document.getElementById("doi").value;
-    //   var input = document.getElementById("dor").value;
-
-    
-//     $.ajax({
-//                type: "POST",
-//                url: '/userdetails/',
-//                 data: {
-//                      // post:'POST',
-//                      csrfmiddlewaretoken: '{{csrf_token}}',
-//                       },
-//     success : function(response) {
-//       var data=response['data'];
-//        var str_head = '<th> User Id </th><th> User Name </th><th> Book Id </th><th> Book Name </th><th> Status </th><th> DateofIssue </th><th> dateofReturn </th>'
-//          var startstr = '';
-//          var str = '';
-   
-
-//       // var data=response['data'];
-//       // var str_head = '<th>UserID<</th><th>BookID</th><th>STATUS</th><th>DateofIssue</th><th>DateofReturn</th>'
-//       // var startstr = '';
-//       // var str = '';
-//         console.log(data)
-//             for (i=0; i<data.length; i++)
-//                { 
-//                var user_id = data[i]['uid'];
-//                var user_id = data[i]['uname'];
-//                var book_id = data[i]['bid'];
-//                var book_id = data[i]['btitle'];
-//                var status = data[i]['status'];
-//                var doi = data[i]['doi'];
-//                var dor = data[i]['dor'];
-               
-//                str += '<tr><td>'+uid+'</td><td>'+uname+'</td><td>'+bid+'</td><td>'+btitle+'</td><td>'+status+'</td><td>'+doi+'</td><td>'+dor+'</td></tr>';
-        
-//                }
-               
-//                var html = '<table><tr>'+str_head +'</tr>'+ str+'</table>';
-//                console.log(html)
-//                $('.memberdetail').append(html)  
-//                  },
-//     });
-//    }
-
+  
 
   	</script></body>
     </html>
 	 {% endblock %}
 
+   
 
 
