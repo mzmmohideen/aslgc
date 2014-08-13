@@ -58,6 +58,7 @@ h2 {
 }
 
 a{text-decoration: none;font-size: 20px;}
+b{float: right; font-size: 20px;color: white;text-decoration: underline;}
 #content  input[type="submit"] {
   background: url(/static/images/logout.png);
   background: -moz-linear-gradient(top,  url(/static/images/logout.png) 100%);
@@ -116,7 +117,7 @@ a{text-decoration: none;font-size: 20px;}
 
 <a href="/mstock/">Stock Details</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <a href="/muser/">Member Detail</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b> Hi Member: {{uname}}</b>
 <div align="center" id="content" style="height:475px;">
 	{% block content %}
 	{% endblock %}

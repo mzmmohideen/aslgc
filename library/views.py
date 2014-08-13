@@ -45,16 +45,18 @@ def loginpage(request):
 #   return render(request,'mlogin.html')
 @login_required
 def mhome(request):
-  return render(request,'mhome.html')
+  return render(request,'mhome.html',{'uname':str(request.user.user.uname)})
 @login_required
 def meissue(request):
-  return render(request,'meissue.html')
+  print request.user.user
+
+  return render(request,'meissue.html',{'uid':request.user.user.uid,'uname':request.user.user.uname,'mobile':request.user.user.mobile,'uaddr':request.user.user.uaddr})
 @login_required
 def muser(request):
-  return render(request,'muser.html')
+  return render(request,'muser.html',{'uid':request.user.user.uid,'uname':request.user.user.uname})
 @login_required
 def mstock(request):
-  return render(request,'mstock.html')
+  return render(request,'mstock.html',{'uname':str(request.user.user.uname)})
 
 
 def login_check(request):

@@ -65,7 +65,7 @@ h1{text-align: center;}
 
 
    <!-- <input type="text"  value="" id="uaddr" name="uaddr"/><br/> -->
-   <section id="content">ENTER Member ID &nbsp;&nbsp;:&nbsp;<input type="text"  id="uid" name="uid"/>
+   <section id="content"><input type="text"  id="uid" name="uid" value="{{uid}}" style="display:none;" />
 	 <button type="button" onclick="Search()">Display</button></section>
    <div><table  align="center"  bgcolor="#FFFFFF" class='memberdetail'>
     </table></div><br/>
@@ -74,7 +74,7 @@ h1{text-align: center;}
 	 
 function Search()
 {
-   var uid = document.getElementById("uid").value;
+   var uid = document.getElementById('uid').value;
 
   
       

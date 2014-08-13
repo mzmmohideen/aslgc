@@ -17,10 +17,10 @@ b{text-align: center;font-size: 18px;}
 <body bgcolor="DarkSeaGreen">
 <h1>Library Lending Register</h1>
 <br/> <form id="Form" style="float:left;&nbsp;"><h2>User Details:</h2>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENTER Member ID &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id="uid" onPointerMove="memberSearch()" name="uid"/><br/>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Member Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id="uname" name="uname"/><br/>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contact Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="" id="mobile" name="mobile"/><br/>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<textarea rows="2" cols="25" id="uaddr" name="uaddr"></textarea><br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENTER Member ID &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="{{uid}}" id="uid" name="uid"/><br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Member Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="{{uname}}" id="uname" name="uname"/><br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Contact Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<input type="text" value="{{mobile}}" id="mobile" name="mobile"/><br/>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;<textarea rows="2" cols="25"  id="uaddr" name="uaddr">{{uaddr}}</textarea><br/>
    <div align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Date of Issue  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; <input type="button" onPointerMove="Issue()" name="doi" id="doi"> </div>
      
    </form>
@@ -38,12 +38,12 @@ Enter Book ID : <input type="text" value="" id="bid" name="bid"  onPointerMove="
 </form>   
 <script src="{{ STATIC_URL }}js/min.js"></script>
  <script type="text/javascript">
-$(document).on('keydown','#uid',function(e) {
-  var keyCode = e.keyCode || e.which;
-  if(keyCode == 9) {
-    memberSearch();        
-  }
-});
+// $(document).on('keydown','#uid',function(e) {
+//   var keyCode = e.keyCode || e.which;
+//   if(keyCode == 9) {
+//     memberSearch();        
+//   }
+// });
 $(document).on('keydown','#bid',function(d) {
   var keyCode = d.keyCode || d.which;
   if(keyCode == 9) {    
@@ -68,31 +68,31 @@ d.setDate(d.getDate() + 15);
 
 document.getElementById("dor").value = dateMY(d);
 }
-function memberSearch()
-   {
-     var uid = document.getElementById("uid").value;
+// function memberSearch()
+//    {
+//      var uid = document.getElementById("uid").value;
 
   
 
-  $.ajax({
-    type:'POST',
-    url:'/issue/',
-    data:{
-      uid:uid,
+//   $.ajax({
+//     type:'POST',
+//     url:'/issue/',
+//     data:{
+//       uid:uid,
 
-      csrfmiddlewaretoken:'{{csrf_token}}',
-    },
-  success : function(response)
-    {
-  console.log(response);
-  // response.style.display = "none";
-  document.getElementById('uname').value=response.uname;
-  document.getElementById('mobile').value=response.mobile;
-  document.getElementById('uaddr').value=response.uaddr;
-  if(response=='none'){alert('Member ID DOES NOT EXISTS !!!!!!!!!')}
-      },
-    });
-   }
+//       csrfmiddlewaretoken:'{{csrf_token}}',
+//     },
+//   success : function(response)
+//     {
+//   console.log(response);
+//   // response.style.display = "none";
+//   document.getElementById('uname').value=response.uname;
+//   document.getElementById('mobile').value=response.mobile;
+//   document.getElementById('uaddr').value=response.uaddr;
+//   if(response=='none'){alert('Member ID DOES NOT EXISTS !!!!!!!!!')}
+//       },
+//     });
+//    }
 
 function bookSearch()
    {
